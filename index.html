@@ -1,1 +1,779 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ouroboros — Coach sportif</title>
 
+<style>
+:root {
+  --fond: #100b17;
+  --fond-carte: #21152b;
+  --fond-carte-claire: #2d1c39;
+  --orange: #c96527;
+  --orange-clair: #ffad70;
+  --violet: #7b3fc6;
+  --rose: #ed4f91;
+  --blanc: #fff8f3;
+  --gris: #c8b9c9;
+  --vert: #70d6a0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 50% 0%, #46205c 0%, transparent 42%),
+    var(--fond);
+  color: var(--blanc);
+  font-family: Arial, sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.application {
+  width: min(430px, 100%);
+  min-height: 100vh;
+  margin: auto;
+  padding: 24px 20px 100px;
+}
+
+.entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.sous-logo {
+  margin-top: 3px;
+  color: var(--orange-clair);
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.icone {
+  width: 42px;
+  height: 42px;
+  border: 1px solid #6c477b;
+  border-radius: 50%;
+  background: #291832;
+  color: white;
+  font-size: 19px;
+}
+
+.salutation {
+  margin-top: 35px;
+  color: var(--gris);
+  font-size: 14px;
+}
+
+h1 {
+  margin: 7px 0 0;
+  font-size: 30px;
+  line-height: 1.12;
+}
+
+h2 {
+  margin: 8px 0;
+  font-size: 22px;
+}
+
+h3 {
+  margin: 0 0 8px;
+}
+
+.carte {
+  margin-top: 20px;
+  padding: 18px;
+  border: 1px solid #452755;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #2b1938, #1e1328);
+  box-shadow: 0 12px 30px #0004;
+}
+
+.serpent-zone {
+  position: relative;
+  width: 285px;
+  height: 285px;
+  margin: 12px auto 0;
+  display: grid;
+  place-items: center;
+}
+
+.serpent-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  overflow: visible;
+  filter: drop-shadow(0 0 12px #ed4f9188);
+}
+
+.cercle-fond {
+  fill: none;
+  stroke: #3b2547;
+  stroke-width: 25;
+}
+
+.corps-serpent {
+  fill: none;
+  stroke: url(#degradeSerpent);
+  stroke-width: 25;
+  stroke-linecap: round;
+  stroke-dasharray: 7 93;
+  transition: stroke-dasharray 1.2s ease;
+}
+
+.tete-serpent {
+  fill: var(--rose);
+  stroke: var(--orange-clair);
+  stroke-width: 3;
+  transition: cx 1.2s ease, cy 1.2s ease;
+}
+
+.oeil-serpent {
+  fill: white;
+  transition: cx 1.2s ease, cy 1.2s ease;
+}
+
+.flamme-centre {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 52px;
+  filter: drop-shadow(0 0 12px #ff9b50);
+  animation: pulse 1.6s infinite;
+}
+
+.description {
+  margin: 0 auto;
+  max-width: 330px;
+  color: var(--gris);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 17px;
+}
+
+.stat {
+  padding: 13px;
+  border-radius: 16px;
+  background: #1a1123;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  color: var(--orange-clair);
+  font-size: 21px;
+}
+
+.stat span {
+  color: var(--gris);
+  font-size: 12px;
+}
+
+.progression-texte {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 17px;
+  color: var(--gris);
+  font-size: 13px;
+}
+
+.barre {
+  height: 10px;
+  margin-top: 8px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #3b2547;
+}
+
+.remplissage {
+  width: 23%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--orange), var(--violet), var(--rose));
+  transition: width 1s ease;
+}
+
+.bouton-principal,
+.bouton-secondaire {
+  width: 100%;
+  padding: 17px;
+  border: 0;
+  border-radius: 17px;
+  font-weight: bold;
+  transition: transform .2s, opacity .2s;
+}
+
+.bouton-principal {
+  margin-top: 17px;
+  background: linear-gradient(100deg, var(--orange), var(--rose));
+  color: white;
+  box-shadow: 0 9px 22px #c9652766;
+}
+
+.bouton-secondaire {
+  margin-top: 10px;
+  background: #392344;
+  color: white;
+}
+
+button:active {
+  transform: scale(.97);
+}
+
+.programme-ligne {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.etiquette {
+  color: var(--orange-clair);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.duree {
+  color: var(--vert);
+  font-size: 13px;
+}
+
+.programme-titre {
+  margin-top: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.programme-detail {
+  margin-top: 6px;
+  color: var(--gris);
+  font-size: 14px;
+}
+
+.boutons-duree {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.duree-btn {
+  padding: 11px 5px;
+  border: 1px solid #68417c;
+  border-radius: 12px;
+  background: #251631;
+  color: white;
+}
+
+.duree-btn.actif {
+  border-color: var(--rose);
+  background: linear-gradient(120deg, #7b3fc6, #ed4f91);
+}
+
+.section-cachee {
+  display: none;
+}
+
+.formulaire label {
+  display: block;
+  margin-top: 13px;
+  color: var(--gris);
+  font-size: 13px;
+}
+
+.formulaire input,
+.formulaire select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 13px;
+  border: 1px solid #634172;
+  border-radius: 12px;
+  outline: none;
+  background: #180f20;
+  color: white;
+}
+
+.formulaire input:focus,
+.formulaire select:focus {
+  border-color: var(--rose);
+}
+
+.message-coach {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.logo-coach {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), var(--rose));
+  font-size: 25px;
+}
+
+.message-coach p {
+  margin: 0;
+  color: var(--gris);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.navigation {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  padding: 11px 8px;
+  border-top: 1px solid #43264f;
+  background: #160e20ee;
+  backdrop-filter: blur(12px);
+}
+
+.navigation button {
+  flex: 1;
+  max-width: 105px;
+  padding: 9px 4px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--gris);
+  font-size: 12px;
+}
+
+.navigation button.actif {
+  background: #3b214a;
+  color: white;
+}
+
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 85px;
+  left: 20px;
+  z-index: 10;
+  display: none;
+  padding: 14px;
+  border: 1px solid #774a89;
+  border-radius: 15px;
+  background: #2b1938;
+  color: white;
+  text-align: center;
+}
+
+.toast.visible {
+  display: block;
+  animation: apparition .3s ease;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.13);
+  }
+}
+
+@keyframes apparition {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 700px) {
+  .application {
+    min-height: auto;
+    margin: 30px auto;
+    border: 8px solid #2c2332;
+    border-radius: 35px;
+    box-shadow: 0 25px 70px #000;
+  }
+
+  .navigation {
+    position: static;
+    margin-top: 25px;
+    border: 0;
+    background: transparent;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="application">
+
+  <header class="entete">
+    <div>
+      <div class="logo">OUROBOROS</div>
+      <div class="sous-logo">FORGE YOURSELF</div>
+    </div>
+    <button class="icone" onclick="afficherMessage('Tes notifications sont à jour 🔔')">
+      🔔
+    </button>
+  </header>
+
+  <section id="accueil">
+    <div class="salutation">
+      Bonjour <span id="prenomAffiche">champion·ne</span>
+    </div>
+
+    <h1>Fais grandir<br>ta flamme.</h1>
+
+    <section class="carte">
+      <div class="serpent-zone">
+        <svg class="serpent-svg" viewBox="0 0 300 300">
+          <defs>
+            <linearGradient id="degradeSerpent" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#c96527"/>
+              <stop offset="50%" stop-color="#7b3fc6"/>
+              <stop offset="100%" stop-color="#ed4f91"/>
+            </linearGradient>
+          </defs>
+
+          <circle class="cercle-fond" cx="150" cy="150" r="105" pathLength="100"></circle>
+
+          <circle
+            id="corpsSerpent"
+            class="corps-serpent"
+            cx="150"
+            cy="150"
+            r="105"
+            pathLength="100">
+          </circle>
+
+          <circle id="teteSerpent" class="tete-serpent" cx="150" cy="45" r="18"></circle>
+          <circle id="oeilSerpent" class="oeil-serpent" cx="157" cy="39" r="3"></circle>
+        </svg>
+
+        <div class="flamme-centre">🔥</div>
+      </div>
+
+      <h2>Ton serpent grandit</h2>
+
+      <p class="description">
+        Chaque entraînement terminé fait grandir ton serpent.
+        Continue tes efforts pour qu’il atteigne sa queue et forme
+        l’Ouroboros complet.
+      </p>
+
+      <div class="stats">
+        <div class="stat">
+          <strong id="joursAffiches">0</strong>
+          <span>jours actifs</span>
+        </div>
+
+        <div class="stat">
+          <strong id="pourcentageAffiche">0%</strong>
+          <span>du parcours</span>
+        </div>
+      </div>
+
+      <div class="progression-texte">
+        <span>Progression</span>
+        <strong id="objectifAffiche">0 / 30 jours</strong>
+      </div>
+
+      <div class="barre">
+        <div id="barreRemplissage" class="remplissage"></div>
+      </div>
+    </section>
+
+    <section class="carte">
+      <div class="programme-ligne">
+        <span class="etiquette">PROGRAMME DU JOUR</span>
+        <span class="duree">18 min</span>
+      </div>
+
+      <div class="programme-titre">
+        Full body adaptatif
+      </div>
+
+      <div class="programme-detail">
+        Niveau : <span id="niveauAffiche">débutant</span> · Sans matériel
+      </div>
+
+      <button class="bouton-principal" onclick="terminerSeance()">
+        ✓ Terminer ma séance
+      </button>
+    </section>
+
+    <section class="carte">
+      <div class="message-coach">
+        <div class="logo-coach">🔥</div>
+        <p id="messageCoach">
+          Chaque séance compte. Prêt·e à faire grandir ton serpent ?
+        </p>
+      </div>
+
+      <button class="bouton-secondaire" onclick="parlerCoach()">
+        🔊 Écouter le coach
+      </button>
+    </section>
+  </section>
+
+  <section id="programme" class="section-cachee">
+    <div class="salutation">Ton parcours</div>
+    <h1>Choisis ton objectif.</h1>
+
+    <section class="carte">
+      <h3>Durée du programme</h3>
+
+      <div class="boutons-duree">
+        <button class="duree-btn actif" onclick="choisirDuree(30, this)">30 jours</button>
+        <button class="duree-btn" onclick="choisirDuree(60, this)">60 jours</button>
+        <button class="duree-btn" onclick="choisirDuree(100, this)">100 jours</button>
+      </div>
+
+      <p class="description" style="margin-top:16px">
+        Ton programme s’adapte à ton niveau, à tes retours et à ton rythme.
+      </p>
+    </section>
+
+    <section class="carte">
+      <h3>Structure de la séance</h3>
+      <p class="programme-detail">
+        Échauffement · Renforcement · Repos adapté · Retour au calme
+      </p>
+      <p class="programme-detail">
+        Le coach ajuste progressivement les répétitions et la difficulté.
+      </p>
+    </section>
+  </section>
+
+  <section id="coach" class="section-cachee">
+    <div class="salutation">Ton coach vocal</div>
+    <h1>On avance<br>ensemble.</h1>
+
+    <section class="carte">
+      <div class="message-coach">
+        <div class="logo-coach">⚡</div>
+        <p>
+          Je t’encourage pendant la séance et j’adapte le programme
+          selon tes sensations.
+        </p>
+      </div>
+
+      <button class="bouton-principal" onclick="parlerCoach()">
+        🔊 Tester la voix du coach
+      </button>
+
+      <button class="bouton-secondaire" onclick="choisirVoix()">
+        Choisir une voix masculine ou féminine
+      </button>
+    </section>
+  </section>
+
+  <section id="profil" class="section-cachee">
+    <div class="salutation">Personnalisation</div>
+    <h1>Ton profil.</h1>
+
+    <section class="carte formulaire">
+      <label for="prenom">Prénom</label>
+      <input id="prenom" type="text" placeholder="Ton prénom">
+
+      <label for="poids">Poids en kg</label>
+      <input id="poids" type="number" placeholder="Ex. 70">
+
+      <label for="taille">Taille en cm</label>
+      <input id="taille" type="number" placeholder="Ex. 175">
+
+      <label for="sexe">Sexe</label>
+      <select id="sexe">
+        <option value="">Je préfère ne pas répondre</option>
+        <option>Femme</option>
+        <option>Homme</option>
+        <option>Autre</option>
+      </select>
+
+      <label for="niveau">Niveau sportif</label>
+      <select id="niveau">
+        <option value="débutant">Débutant</option>
+        <option value="intermédiaire">Intermédiaire</option>
+        <option value="expert">Expert</option>
+      </select>
+
+      <button class="bouton-principal" onclick="enregistrerProfil()">
+        Enregistrer mon profil
+      </button>
+    </section>
+
+    <p class="description" style="margin-top:16px">
+      Tes informations servent à personnaliser le programme.
+      Elles sont facultatives dans cette maquette.
+    </p>
+  </section>
+
+  <nav class="navigation">
+    <button class="actif" onclick="afficherSection('accueil', this)">⌂<br>Accueil</button>
+    <button onclick="afficherSection('programme', this)">◉<br>Programme</button>
+    <button onclick="afficherSection('coach', this)">⚡<br>Coach</button>
+    <button onclick="afficherSection('profil', this)">●<br>Profil</button>
+  </nav>
+
+</main>
+
+<div id="toast" class="toast"></div>
+
+<script>
+let jours = Number(localStorage.getItem("ouroborosJours")) || 0;
+let objectif = Number(localStorage.getItem("ouroborosObjectif")) || 30;
+let prenom = localStorage.getItem("ouroborosPrenom") || "";
+let niveau = localStorage.getItem("ouroborosNiveau") || "débutant";
+
+function mettreAJour() {
+  const pourcentage = Math.min(100, Math.round((jours / objectif) * 100));
+
+  document.getElementById("joursAffiches").textContent = jours;
+  document.getElementById("pourcentageAffiche").textContent = pourcentage + "%";
+  document.getElementById("objectifAffiche").textContent = jours + " / " + objectif + " jours";
+  document.getElementById("barreRemplissage").style.width = pourcentage + "%";
+  document.getElementById("corpsSerpent").style.strokeDasharray = pourcentage + " " + (100 - pourcentage);
+  document.getElementById("niveauAffiche").textContent = niveau;
+
+  document.getElementById("prenomAffiche").textContent =
+    prenom.trim() === "" ? "champion·ne" : prenom;
+
+  const angle = (pourcentage / 100) * Math.PI * 2 - Math.PI / 2;
+  const x = 150 + Math.cos(angle) * 105;
+  const y = 150 + Math.sin(angle) * 105;
+
+  document.getElementById("teteSerpent").setAttribute("cx", x);
+  document.getElementById("teteSerpent").setAttribute("cy", y);
+  document.getElementById("oeilSerpent").setAttribute("cx", x + 6);
+  document.getElementById("oeilSerpent").setAttribute("cy", y - 6);
+}
+
+function terminerSeance() {
+  if (jours < objectif) {
+    jours++;
+    localStorage.setItem("ouroborosJours", jours);
+    mettreAJour();
+
+    if (jours === objectif) {
+      afficherMessage("Félicitations ! Ton Ouroboros est complet 🐍🔥");
+    } else {
+      afficherMessage("Bravo ! Ton serpent vient de grandir 🔥");
+    }
+  } else {
+    afficherMessage("Ton parcours est terminé. Lance un nouveau défi !");
+  }
+}
+
+function choisirDuree(valeur, bouton) {
+  objectif = valeur;
+  localStorage.setItem("ouroborosObjectif", objectif);
+
+  document.querySelectorAll(".duree-btn").forEach(function(btn) {
+    btn.classList.remove("actif");
+  });
+
+  bouton.classList.add("actif");
+  mettreAJour();
+  afficherMessage("Programme de " + valeur + " jours sélectionné");
+}
+
+function enregistrerProfil() {
+  prenom = document.getElementById("prenom").value;
+  niveau = document.getElementById("niveau").value;
+
+  localStorage.setItem("ouroborosPrenom", prenom);
+  localStorage.setItem("ouroborosNiveau", niveau);
+
+  mettreAJour();
+  afficherMessage("Profil enregistré. Ton programme est personnalisé !");
+}
+
+function afficherSection(id, bouton) {
+  document.querySelectorAll("main section[id]").forEach(function(section) {
+    section.classList.add("section-cachee");
+  });
+
+  document.getElementById(id).classList.remove("section-cachee");
+
+  document.querySelectorAll(".navigation button").forEach(function(btn) {
+    btn.classList.remove("actif");
+  });
+
+  bouton.classList.add("actif");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function afficherMessage(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("visible");
+
+  setTimeout(function() {
+    toast.classList.remove("visible");
+  }, 3000);
+}
+
+function parlerCoach() {
+  const message =
+    "Bravo ! Chaque séance fait grandir ton serpent. Continue comme ça !";
+
+  afficherMessage(message);
+
+  if ("speechSynthesis" in window) {
+    const voix = new SpeechSynthesisUtterance(message);
+    voix.lang = "fr-FR";
+    voix.rate = 1;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(voix);
+  }
+}
+
+function choisirVoix() {
+  afficherMessage("Les voix masculine et féminine seront disponibles dans la version complète.");
+}
+
+document.getElementById("prenom").value = prenom;
+document.getElementById("niveau").value = niveau;
+mettreAJour();
+</script>
+
+</body>
+                       </html>
