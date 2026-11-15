@@ -11,7 +11,6 @@
     :root {
       --fond: #100b17;
       --fond-carte: #21152b;
-      --fond-carte-claire: #2d1c39;
       --orange: #c96527;
       --orange-clair: #ffad70;
       --violet: #7b3fc6;
@@ -83,14 +82,15 @@
       letter-spacing: 2px;
     }
 
-    .icone {
-      width: 42px;
-      height: 42px;
+    .bouton-parametres {
+      width: 44px;
+      height: 44px;
       border: 1px solid #6c477b;
-      border-radius: 50%;
+      border-radius: 14px;
       background: #291832;
       color: white;
-      font-size: 19px;
+      font-size: 24px;
+      line-height: 1;
     }
 
     .salutation {
@@ -121,6 +121,44 @@
       border-radius: 24px;
       background: linear-gradient(145deg, #2b1938, #1e1328);
       box-shadow: 0 12px 30px #0004;
+    }
+
+    .profil-accueil {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .photo-profil {
+      width: 58px;
+      height: 58px;
+      flex: 0 0 58px;
+      overflow: hidden;
+      border: 2px solid var(--orange-clair);
+      border-radius: 50%;
+      background:
+        linear-gradient(135deg, var(--orange), var(--rose));
+      object-fit: cover;
+    }
+
+    .photo-profil-placeholder {
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 25px;
+    }
+
+    .nom-profil {
+      color: var(--blanc);
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .niveau-profil {
+      margin-top: 4px;
+      color: var(--gris);
+      font-size: 13px;
     }
 
     .serpent-zone {
@@ -302,6 +340,13 @@
       line-height: 1.5;
     }
 
+    .statut-seance {
+      margin-top: 10px;
+      color: var(--vert);
+      font-size: 13px;
+      text-align: center;
+    }
+
     .boutons-duree {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -352,6 +397,46 @@
     .formulaire input:focus,
     .formulaire select:focus {
       border-color: var(--rose);
+    }
+
+    .champ-photo {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .aperçu-photo {
+      width: 78px;
+      height: 78px;
+      overflow: hidden;
+      border: 2px solid var(--orange-clair);
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--rose));
+      object-fit: cover;
+    }
+
+    .photo-actions {
+      flex: 1;
+    }
+
+    .bouton-photo {
+      display: inline-block;
+      padding: 11px 13px;
+      border: 1px solid #68417c;
+      border-radius: 12px;
+      background: #392344;
+      color: white;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .aide {
+      margin-top: 7px;
+      color: var(--gris);
+      font-size: 12px;
+      line-height: 1.4;
     }
 
     .message-coach {
@@ -414,7 +499,7 @@
       right: 20px;
       bottom: 85px;
       left: 20px;
-      z-index: 10;
+      z-index: 30;
       display: none;
       padding: 14px;
       border: 1px solid #774a89;
@@ -429,11 +514,125 @@
       animation: apparition .3s ease;
     }
 
-    .statut-seance {
-      margin-top: 10px;
-      color: var(--vert);
+    .volet-fond {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      background: #0009;
+    }
+
+    .volet-fond.visible {
+      display: block;
+    }
+
+    .volet-parametres {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 25;
+      width: min(390px, 92%);
+      overflow-y: auto;
+      padding: 24px 20px 40px;
+      border-left: 1px solid #543266;
+      background:
+        radial-gradient(circle at 100% 0%, #46205c 0%, transparent 40%),
+        var(--fond);
+      box-shadow: -12px 0 35px #0008;
+      transform: translateX(100%);
+      transition: transform .3s ease;
+    }
+
+    .volet-parametres.visible {
+      transform: translateX(0);
+    }
+
+    .volet-entete {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .volet-entete h2 {
+      margin: 0;
+    }
+
+    .bouton-fermer {
+      width: 40px;
+      height: 40px;
+      border: 1px solid #68417c;
+      border-radius: 12px;
+      background: #291832;
+      color: white;
+      font-size: 22px;
+    }
+
+    .etiquette-reglage {
+      display: block;
+      margin: 24px 0 8px;
+      color: var(--orange-clair);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .options-voix {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .option-voix {
+      padding: 12px 8px;
+      border: 1px solid #68417c;
+      border-radius: 12px;
+      background: #251631;
+      color: white;
+    }
+
+    .option-voix.actif {
+      border-color: var(--rose);
+      background: linear-gradient(120deg, #7b3fc6, #ed4f91);
+    }
+
+    .alerte-premiere-ouverture {
+      margin-top: 20px;
+      padding: 13px;
+      border: 1px solid #68417c;
+      border-radius: 14px;
+      background: #251631;
+      color: var(--gris);
       font-size: 13px;
-      text-align: center;
+      line-height: 1.45;
+    }
+
+    .ecran-configuration {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      overflow-y: auto;
+      padding: 28px 20px;
+      background:
+        radial-gradient(circle at 50% 0%, #46205c 0%, transparent 42%),
+        var(--fond);
+    }
+
+    .ecran-configuration.visible {
+      display: block;
+    }
+
+    .configuration-contenu {
+      width: min(430px, 100%);
+      margin: 0 auto;
+    }
+
+    .configuration-introduction {
+      margin-top: 12px;
+      color: var(--gris);
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     @keyframes pulse {
@@ -489,7 +688,134 @@
 
 <body>
 
-  <main class="application">
+  <!-- ÉCRAN DE CONFIGURATION INITIAL -->
+  <section
+    id="ecranConfiguration"
+    class="ecran-configuration"
+    aria-labelledby="titreConfiguration">
+
+    <div class="configuration-contenu">
+      <div class="logo">OUROBOROS</div>
+      <div class="sous-logo">FORGE YOURSELF</div>
+
+      <div class="salutation">Bienvenue dans ton parcours</div>
+
+      <h1 id="titreConfiguration">
+        Personnalise<br>ton expérience.
+      </h1>
+
+      <p class="configuration-introduction">
+        Configure ton profil, ton programme et la voix de ton coach.
+        Tu pourras ensuite modifier ces réglages depuis le menu ☰.
+      </p>
+
+      <section class="carte formulaire">
+        <div class="champ-photo">
+          <div
+            id="aperçuPhotoPremiereOuverture"
+            class="aperçu-photo photo-profil-placeholder"
+            aria-label="Aperçu de la photo de profil">
+            👤
+          </div>
+
+          <div class="photo-actions">
+            <label for="photoPremiereOuverture" class="bouton-photo">
+              Ajouter une photo
+            </label>
+
+            <input
+              id="photoPremiereOuverture"
+              type="file"
+              accept="image/*"
+              hidden>
+
+            <div class="aide">
+              Facultatif · JPG, PNG ou WEBP
+            </div>
+          </div>
+        </div>
+
+        <label for="prenomPremiereOuverture">Prénom</label>
+        <input
+          id="prenomPremiereOuverture"
+          type="text"
+          placeholder="Ton prénom"
+          autocomplete="given-name">
+
+        <label for="poidsPremiereOuverture">Poids en kg</label>
+        <input
+          id="poidsPremiereOuverture"
+          type="number"
+          min="1"
+          max="500"
+          step="0.1"
+          placeholder="Ex. 70"
+          inputmode="decimal">
+
+        <label for="taillePremiereOuverture">Taille en cm</label>
+        <input
+          id="taillePremiereOuverture"
+          type="number"
+          min="50"
+          max="250"
+          step="1"
+          placeholder="Ex. 175"
+          inputmode="numeric">
+
+        <label for="sexePremiereOuverture">Sexe</label>
+        <select id="sexePremiereOuverture">
+          <option value="">Je préfère ne pas répondre</option>
+          <option value="Femme">Femme</option>
+          <option value="Homme">Homme</option>
+          <option value="Autre">Autre</option>
+        </select>
+
+        <label for="niveauPremiereOuverture">Niveau sportif</label>
+        <select id="niveauPremiereOuverture">
+          <option value="débutant">Débutant</option>
+          <option value="intermédiaire">Intermédiaire</option>
+          <option value="expert">Expert</option>
+        </select>
+
+        <label for="objectifPremiereOuverture">Durée du programme</label>
+        <select id="objectifPremiereOuverture">
+          <option value="30">30 jours</option>
+          <option value="60">60 jours</option>
+          <option value="100">100 jours</option>
+        </select>
+
+        <label>Voix du coach</label>
+
+        <div class="options-voix">
+          <button
+            class="option-voix actif"
+            type="button"
+            data-voix="feminine"
+            onclick="choisirVoixConfiguration('feminine')">
+            ♀ Féminine
+          </button>
+
+          <button
+            class="option-voix"
+            type="button"
+            data-voix="masculine"
+            onclick="choisirVoixConfiguration('masculine')">
+            ♂ Masculine
+          </button>
+        </div>
+
+        <button
+          class="bouton-principal"
+          type="button"
+          onclick="terminerConfigurationInitiale()">
+          Commencer mon parcours
+        </button>
+      </section>
+    </div>
+  </section>
+
+  <!-- APPLICATION PRINCIPALE -->
+  <main id="application" class="application">
 
     <header class="entete">
       <div>
@@ -498,18 +824,34 @@
       </div>
 
       <button
-        class="icone"
+        class="bouton-parametres"
         type="button"
-        aria-label="Afficher les notifications"
-        onclick="afficherMessage('Tes notifications sont à jour 🔔')">
-        🔔
+        aria-label="Ouvrir les paramètres"
+        aria-expanded="false"
+        onclick="ouvrirParametres()">
+        ☰
       </button>
     </header>
 
     <!-- ACCUEIL -->
     <section id="accueil">
-      <div class="salutation">
-        Bonjour <span id="prenomAffiche">champion·ne</span>
+      <div class="profil-accueil">
+        <div
+          id="photoAccueil"
+          class="photo-profil photo-profil-placeholder"
+          aria-label="Photo de profil">
+          👤
+        </div>
+
+        <div>
+          <div class="nom-profil">
+            Bonjour <span id="prenomAffiche">champion·ne</span>
+          </div>
+
+          <div class="niveau-profil">
+            Niveau <span id="niveauAfficheAccueil">débutant</span>
+          </div>
+        </div>
       </div>
 
       <h1>Fais grandir<br>ta flamme.</h1>
@@ -632,28 +974,12 @@
 
         <div id="statutSeance" class="statut-seance"></div>
       </section>
-
-      <section class="carte">
-        <div class="message-coach">
-          <div class="logo-coach" aria-hidden="true">🔥</div>
-          <p id="messageCoach">
-            Chaque séance compte. Prêt·e à faire grandir ton serpent ?
-          </p>
-        </div>
-
-        <button
-          class="bouton-secondaire"
-          type="button"
-          onclick="parlerCoach()">
-          🔊 Écouter le coach
-        </button>
-      </section>
     </section>
 
     <!-- PROGRAMME -->
     <section id="programme" class="section-cachee">
       <div class="salutation">Ton parcours</div>
-      <h1>Choisis ton objectif.</h1>
+      <h1>Ton programme.</h1>
 
       <section class="carte">
         <h3>Durée du programme</h3>
@@ -711,9 +1037,8 @@
         <div class="message-coach">
           <div class="logo-coach" aria-hidden="true">⚡</div>
 
-          <p>
-            Je t’encourage pendant la séance et j’adapte le programme
-            selon tes sensations.
+          <p id="messageCoach">
+            Ta voix de coach est prête pour t'accompagner.
           </p>
         </div>
 
@@ -722,13 +1047,6 @@
           type="button"
           onclick="parlerCoach()">
           🔊 Tester la voix du coach
-        </button>
-
-        <button
-          class="bouton-secondaire"
-          type="button"
-          onclick="choisirVoix()">
-          Choisir une voix masculine ou féminine
         </button>
       </section>
     </section>
@@ -739,6 +1057,29 @@
       <h1>Ton profil.</h1>
 
       <section class="carte formulaire">
+        <div class="champ-photo">
+          <img
+            id="aperçuPhotoProfil"
+            class="aperçu-photo"
+            alt="Aperçu de la photo de profil">
+
+          <div class="photo-actions">
+            <label for="photoProfil" class="bouton-photo">
+              Modifier la photo
+            </label>
+
+            <input
+              id="photoProfil"
+              type="file"
+              accept="image/*"
+              hidden>
+
+            <div class="aide">
+              Image carrée recommandée.
+            </div>
+          </div>
+        </div>
+
         <label for="prenom">Prénom</label>
         <input
           id="prenom"
@@ -785,14 +1126,9 @@
           class="bouton-principal"
           type="button"
           onclick="enregistrerProfil()">
-          Enregistrer mon profil
+          Enregistrer le profil
         </button>
       </section>
-
-      <p class="description" style="margin-top: 16px;">
-        Tes informations servent à personnaliser le programme.
-        Elles sont facultatives dans cette maquette.
-      </p>
     </section>
 
     <!-- NAVIGATION -->
@@ -823,8 +1159,99 @@
         ●<br>Profil
       </button>
     </nav>
-
   </main>
+
+  <!-- VOLET PARAMÈTRES -->
+  <div
+    id="voletFond"
+    class="volet-fond"
+    onclick="fermerParametres()">
+  </div>
+
+  <aside
+    id="voletParametres"
+    class="volet-parametres"
+    aria-label="Paramètres"
+    aria-hidden="true">
+
+    <div class="volet-entete">
+      <h2>Paramètres</h2>
+
+      <button
+        class="bouton-fermer"
+        type="button"
+        aria-label="Fermer les paramètres"
+        onclick="fermerParametres()">
+        ×
+      </button>
+    </div>
+
+    <div class="alerte-premiere-ouverture">
+      Tu peux modifier ici ton programme, ton profil et la voix du coach.
+    </div>
+
+    <span class="etiquette-reglage">PROGRAMME</span>
+
+    <div class="boutons-duree">
+      <button
+        class="duree-btn"
+        type="button"
+        data-duree="30"
+        onclick="choisirDuree(30, this)">
+        30 jours
+      </button>
+
+      <button
+        class="duree-btn"
+        type="button"
+        data-duree="60"
+        onclick="choisirDuree(60, this)">
+        60 jours
+      </button>
+
+      <button
+        class="duree-btn"
+        type="button"
+        data-duree="100"
+        onclick="choisirDuree(100, this)">
+        100 jours
+      </button>
+    </div>
+
+    <span class="etiquette-reglage">VOIX DU COACH</span>
+
+    <div class="options-voix">
+      <button
+        class="option-voix"
+        type="button"
+        data-voix="feminine"
+        onclick="choisirVoixDepuisParametres('feminine')">
+        ♀ Féminine
+      </button>
+
+      <button
+        class="option-voix"
+        type="button"
+        data-voix="masculine"
+        onclick="choisirVoixDepuisParametres('masculine')">
+        ♂ Masculine
+      </button>
+    </div>
+
+    <button
+      class="bouton-secondaire"
+      type="button"
+      onclick="testerVoixDepuisParametres()">
+      🔊 Tester la voix
+    </button>
+
+    <button
+      class="bouton-principal"
+      type="button"
+      onclick="ouvrirProfilDepuisParametres()">
+      Modifier mon profil
+    </button>
+  </aside>
 
   <div
     id="toast"
@@ -837,6 +1264,7 @@
     "use strict";
 
     const STOCKAGE = {
+      configuration: "ouroborosConfigurationTerminee",
       jours: "ouroborosJours",
       objectif: "ouroborosObjectif",
       prenom: "ouroborosPrenom",
@@ -844,6 +1272,8 @@
       taille: "ouroborosTaille",
       sexe: "ouroborosSexe",
       niveau: "ouroborosNiveau",
+      voix: "ouroborosVoix",
+      photo: "ouroborosPhoto",
       derniereSeance: "ouroborosDerniereSeance"
     };
 
@@ -854,8 +1284,11 @@
     let taille = localStorage.getItem(STOCKAGE.taille) || "";
     let sexe = localStorage.getItem(STOCKAGE.sexe) || "";
     let niveau = localStorage.getItem(STOCKAGE.niveau) || "débutant";
+    let voixCoach = localStorage.getItem(STOCKAGE.voix) || "feminine";
+    let photoProfil = localStorage.getItem(STOCKAGE.photo) || "";
 
     let minuterieToast;
+    let voixDisponibles = [];
 
     function lireNombre(cle, valeurParDefaut) {
       const valeur = Number(localStorage.getItem(cle));
@@ -874,10 +1307,75 @@
         .slice(0, 10);
     }
 
-    function echapperTexte(texte) {
-      const div = document.createElement("div");
-      div.textContent = texte;
-      return div.textContent;
+    function configurationTerminee() {
+      return localStorage.getItem(STOCKAGE.configuration) === "oui";
+    }
+
+    function choisirVoixConfiguration(valeur) {
+      voixCoach = valeur;
+      mettreAJourBoutonsVoix();
+    }
+
+    function terminerConfigurationInitiale() {
+      prenom = document.getElementById(
+        "prenomPremiereOuverture"
+      ).value.trim();
+
+      poids = document.getElementById(
+        "poidsPremiereOuverture"
+      ).value;
+
+      taille = document.getElementById(
+        "taillePremiereOuverture"
+      ).value;
+
+      sexe = document.getElementById(
+        "sexePremiereOuverture"
+      ).value;
+
+      niveau = document.getElementById(
+        "niveauPremiereOuverture"
+      ).value;
+
+      objectif = Number(document.getElementById(
+        "objectifPremiereOuverture"
+      ).value);
+
+      sauvegarderProfil();
+
+      localStorage.setItem(
+        STOCKAGE.objectif,
+        String(objectif)
+      );
+
+      localStorage.setItem(
+        STOCKAGE.configuration,
+        "oui"
+      );
+
+      document.getElementById(
+        "ecranConfiguration"
+      ).classList.remove("visible");
+
+      document.body.style.overflow = "";
+
+      chargerProfilDansInterface();
+      mettreAJour();
+
+      afficherMessage(
+        "Bienvenue dans ton parcours, " +
+        (prenom || "champion·ne") +
+        " 🔥"
+      );
+    }
+
+    function sauvegarderProfil() {
+      localStorage.setItem(STOCKAGE.prenom, prenom);
+      localStorage.setItem(STOCKAGE.poids, poids);
+      localStorage.setItem(STOCKAGE.taille, taille);
+      localStorage.setItem(STOCKAGE.sexe, sexe);
+      localStorage.setItem(STOCKAGE.niveau, niveau);
+      localStorage.setItem(STOCKAGE.voix, voixCoach);
     }
 
     function mettreAJour() {
@@ -888,25 +1386,41 @@
       const espace = Math.max(0, 100 - pourcentage);
 
       document.getElementById("joursAffiches").textContent = jours;
-      document.getElementById("pourcentageAffiche").textContent =
-        pourcentage + "%";
 
-      document.getElementById("objectifAffiche").textContent =
-        jours + " / " + objectif + " jours";
+      document.getElementById(
+        "pourcentageAffiche"
+      ).textContent = pourcentage + "%";
 
-      document.getElementById("barreRemplissage").style.width =
-        pourcentage + "%";
+      document.getElementById(
+        "objectifAffiche"
+      ).textContent = jours + " / " + objectif + " jours";
 
-      const barre = document.querySelector(".barre");
-      barre.setAttribute("aria-valuenow", pourcentage);
+      document.getElementById(
+        "barreRemplissage"
+      ).style.width = pourcentage + "%";
 
-      document.getElementById("corpsSerpent").style.strokeDasharray =
-        `${pourcentage} ${espace}`;
+      document.querySelector(".barre").setAttribute(
+        "aria-valuenow",
+        pourcentage
+      );
 
-      document.getElementById("niveauAffiche").textContent = niveau;
+      document.getElementById(
+        "corpsSerpent"
+      ).style.strokeDasharray = `${pourcentage} ${espace}`;
 
-      document.getElementById("prenomAffiche").textContent =
-        prenom.trim() === "" ? "champion·ne" : prenom.trim();
+      const nom = prenom.trim() || "champion·ne";
+
+      document.getElementById(
+        "prenomAffiche"
+      ).textContent = nom;
+
+      document.getElementById(
+        "niveauAffiche"
+      ).textContent = niveau;
+
+      document.getElementById(
+        "niveauAfficheAccueil"
+      ).textContent = niveau;
 
       const angle = (pourcentage / 100) * Math.PI * 2 - Math.PI / 2;
       const x = 150 + Math.cos(angle) * 105;
@@ -923,6 +1437,34 @@
 
       restaurerEtatSeance();
       restaurerDuree();
+      mettreAJourPhotos();
+      mettreAJourBoutonsVoix();
+    }
+
+    function restaurerEtatSeance() {
+      const derniereSeance = localStorage.getItem(
+        STOCKAGE.derniereSeance
+      );
+
+      const aujourdHui = dateLocaleISO();
+      const bouton = document.getElementById("boutonSeance");
+      const statut = document.getElementById("statutSeance");
+
+      if (derniereSeance === aujourdHui) {
+        bouton.disabled = true;
+        bouton.textContent = "✓ Séance du jour terminée";
+        statut.textContent =
+          "Reviens demain pour continuer ta progression.";
+      } else if (jours >= objectif) {
+        bouton.disabled = false;
+        bouton.textContent = "🔥 Parcours terminé";
+        statut.textContent =
+          "Lance un nouveau défi depuis les paramètres.";
+      } else {
+        bouton.disabled = false;
+        bouton.textContent = "✓ Terminer ma séance";
+        statut.textContent = "";
+      }
     }
 
     function restaurerDuree() {
@@ -933,64 +1475,6 @@
         bouton.classList.toggle("actif", actif);
         bouton.setAttribute("aria-pressed", String(actif));
       });
-    }
-
-    function restaurerEtatSeance() {
-      const derniereSeance =
-        localStorage.getItem(STOCKAGE.derniereSeance);
-
-      const aujourdHui = dateLocaleISO();
-      const bouton = document.getElementById("boutonSeance");
-      const statut = document.getElementById("statutSeance");
-
-      if (derniereSeance === aujourdHui) {
-        bouton.disabled = true;
-        bouton.textContent = "✓ Séance du jour terminée";
-        statut.textContent = "Reviens demain pour continuer ta progression.";
-      } else if (jours >= objectif) {
-        bouton.disabled = false;
-        bouton.textContent = "🔥 Parcours terminé";
-        statut.textContent = "Lance un nouveau défi depuis Programme.";
-      } else {
-        bouton.disabled = false;
-        bouton.textContent = "✓ Terminer ma séance";
-        statut.textContent = "";
-      }
-    }
-
-    function terminerSeance() {
-      const aujourdHui = dateLocaleISO();
-      const derniereSeance =
-        localStorage.getItem(STOCKAGE.derniereSeance);
-
-      if (derniereSeance === aujourdHui) {
-        afficherMessage("Ta séance du jour est déjà comptabilisée 🔥");
-        return;
-      }
-
-      if (jours >= objectif) {
-        afficherMessage(
-          "Ton parcours est terminé. Lance un nouveau défi !"
-        );
-        return;
-      }
-
-      jours++;
-
-      localStorage.setItem(STOCKAGE.jours, String(jours));
-      localStorage.setItem(STOCKAGE.derniereSeance, aujourdHui);
-
-      mettreAJour();
-
-      if (jours >= objectif) {
-        afficherMessage(
-          "Félicitations ! Ton Ouroboros est complet 🐍🔥"
-        );
-      } else {
-        afficherMessage(
-          "Bravo ! Ton serpent vient de grandir 🔥"
-        );
-      }
     }
 
     function choisirDuree(valeur, bouton) {
@@ -1005,18 +1489,57 @@
         String(objectif)
       );
 
-      document.querySelectorAll(".duree-btn").forEach(function (btn) {
-        const actif = btn === bouton;
-
-        btn.classList.toggle("actif", actif);
-        btn.setAttribute("aria-pressed", String(actif));
-      });
-
+      restaurerDuree();
       mettreAJour();
 
       afficherMessage(
         "Programme de " + valeur + " jours sélectionné"
       );
+    }
+
+    function terminerSeance() {
+      const aujourdHui = dateLocaleISO();
+      const derniereSeance = localStorage.getItem(
+        STOCKAGE.derniereSeance
+      );
+
+      if (derniereSeance === aujourdHui) {
+        afficherMessage(
+          "Ta séance du jour est déjà comptabilisée 🔥"
+        );
+        return;
+      }
+
+      if (jours >= objectif) {
+        afficherMessage(
+          "Ton parcours est terminé. Lance un nouveau défi !"
+        );
+        return;
+      }
+
+      jours++;
+
+      localStorage.setItem(
+        STOCKAGE.jours,
+        String(jours)
+      );
+
+      localStorage.setItem(
+        STOCKAGE.derniereSeance,
+        aujourdHui
+      );
+
+      mettreAJour();
+
+      if (jours >= objectif) {
+        afficherMessage(
+          "Félicitations ! Ton Ouroboros est complet 🐍🔥"
+        );
+      } else {
+        afficherMessage(
+          "Bravo ! Ton serpent vient de grandir 🔥"
+        );
+      }
     }
 
     function enregistrerProfil() {
@@ -1026,16 +1549,11 @@
       sexe = document.getElementById("sexe").value;
       niveau = document.getElementById("niveau").value;
 
-      localStorage.setItem(STOCKAGE.prenom, prenom);
-      localStorage.setItem(STOCKAGE.poids, poids);
-      localStorage.setItem(STOCKAGE.taille, taille);
-      localStorage.setItem(STOCKAGE.sexe, sexe);
-      localStorage.setItem(STOCKAGE.niveau, niveau);
-
+      sauvegarderProfil();
       mettreAJour();
 
       afficherMessage(
-        "Profil enregistré. Ton programme est personnalisé !"
+        "Profil enregistré avec succès !"
       );
     }
 
@@ -1066,6 +1584,115 @@
       });
     }
 
+    function ouvrirParametres() {
+      const volet = document.getElementById("voletParametres");
+      const fond = document.getElementById("voletFond");
+      const bouton = document.querySelector(".bouton-parametres");
+
+      volet.classList.add("visible");
+      fond.classList.add("visible");
+      volet.setAttribute("aria-hidden", "false");
+      bouton.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+    }
+
+    function fermerParametres() {
+      const volet = document.getElementById("voletParametres");
+      const fond = document.getElementById("voletFond");
+      const bouton = document.querySelector(".bouton-parametres");
+
+      volet.classList.remove("visible");
+      fond.classList.remove("visible");
+      volet.setAttribute("aria-hidden", "true");
+      bouton.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    }
+
+    function ouvrirProfilDepuisParametres() {
+      fermerParametres();
+
+      const boutonProfil = document.querySelector(
+        ".navigation button:nth-child(4)"
+      );
+
+      afficherSection("profil", boutonProfil);
+    }
+
+    function choisirVoixDepuisParametres(valeur) {
+      voixCoach = valeur;
+
+      localStorage.setItem(
+        STOCKAGE.voix,
+        voixCoach
+      );
+
+      mettreAJourBoutonsVoix();
+
+      afficherMessage(
+        "Voix " +
+        (valeur === "feminine" ? "féminine" : "masculine") +
+        " sélectionnée"
+      );
+    }
+
+    function mettreAJourBoutonsVoix() {
+      document.querySelectorAll("[data-voix]").forEach(function (bouton) {
+        const actif = bouton.dataset.voix === voixCoach;
+
+        bouton.classList.toggle("actif", actif);
+        bouton.setAttribute("aria-pressed", String(actif));
+      });
+    }
+
+    function testerVoixDepuisParametres() {
+      parlerCoach();
+    }
+
+    function parlerCoach() {
+      const message =
+        "Bravo ! Chaque séance fait grandir ton serpent. Continue comme ça !";
+
+      document.getElementById(
+        "messageCoach"
+      ).textContent = message;
+
+      afficherMessage(message);
+
+      if (!("speechSynthesis" in window)) {
+        afficherMessage(
+          "La synthèse vocale n'est pas disponible sur cet appareil."
+        );
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(message);
+
+      utterance.lang = "fr-FR";
+      utterance.rate = 1;
+      utterance.pitch = voixCoach === "feminine"
+        ? 1.15
+        : 0.85;
+
+      const voixFrancaise = voixDisponibles.find(function (voix) {
+        return voix.lang.toLowerCase().startsWith("fr");
+      });
+
+      if (voixFrancaise) {
+        utterance.voice = voixFrancaise;
+      }
+
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function chargerVoixDisponibles() {
+      if (!("speechSynthesis" in window)) {
+        return;
+      }
+
+      voixDisponibles = window.speechSynthesis.getVoices();
+    }
+
     function afficherMessage(message) {
       const toast = document.getElementById("toast");
 
@@ -1079,41 +1706,219 @@
       }, 3000);
     }
 
-    function parlerCoach() {
-      const message =
-        "Bravo ! Chaque séance fait grandir ton serpent. Continue comme ça !";
+    function convertirImageEnBase64(file, callback) {
+      if (!file || !file.type.startsWith("image/")) {
+        afficherMessage(
+          "Merci de sélectionner une image valide."
+        );
+        return;
+      }
 
-      document.getElementById("messageCoach").textContent = message;
-      afficherMessage(message);
+      const lecteur = new FileReader();
 
-      if ("speechSynthesis" in window) {
-        const voix = new SpeechSynthesisUtterance(message);
+      lecteur.onload = function (evenement) {
+        const image = new Image();
 
-        voix.lang = "fr-FR";
-        voix.rate = 1;
-        voix.pitch = 1;
+        image.onload = function () {
+          const tailleMax = 500;
+          const ratio = Math.min(
+            tailleMax / image.width,
+            tailleMax / image.height,
+            1
+          );
 
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(voix);
+          const largeur = Math.round(image.width * ratio);
+          const hauteur = Math.round(image.height * ratio);
+
+          const canvas = document.createElement("canvas");
+          canvas.width = largeur;
+          canvas.height = hauteur;
+
+          const contexte = canvas.getContext("2d");
+
+          contexte.drawImage(
+            image,
+            0,
+            0,
+            largeur,
+            hauteur
+          );
+
+          const base64 = canvas.toDataURL(
+            "image/jpeg",
+            0.82
+          );
+
+          callback(base64);
+        };
+
+        image.src = evenement.target.result;
+      };
+
+      lecteur.readAsDataURL(file);
+    }
+
+    function gérerPhoto(file, mode) {
+      convertirImageEnBase64(file, function (base64) {
+        photoProfil = base64;
+
+        localStorage.setItem(
+          STOCKAGE.photo,
+          photoProfil
+        );
+
+        mettreAJourPhotos();
+
+        if (mode === "premiere-ouverture") {
+          afficherMessage("Photo ajoutée à ton profil.");
+        } else {
+          afficherMessage("Photo de profil mise à jour.");
+        }
+      });
+    }
+
+    function mettreAJourPhotos() {
+      const imageProfil = document.getElementById("aperçuPhotoProfil");
+      const imageAccueil = document.getElementById("photoAccueil");
+      const imagePremiereOuverture = document.getElementById(
+        "aperçuPhotoPremiereOuverture"
+      );
+
+      if (photoProfil) {
+        imageProfil.src = photoProfil;
+        imageAccueil.innerHTML = "";
+        imageAccueil.classList.remove("photo-profil-placeholder");
+
+        const image = document.createElement("img");
+        image.src = photoProfil;
+        image.alt = "Photo de profil";
+        image.className = "photo-profil";
+
+        imageAccueil.replaceWith(image);
+        image.id = "photoAccueil";
+
+        if (imagePremiereOuverture) {
+          imagePremiereOuverture.innerHTML = "";
+          imagePremiereOuverture.classList.remove(
+            "photo-profil-placeholder"
+          );
+
+          const imageConfiguration = document.createElement("img");
+          imageConfiguration.src = photoProfil;
+          imageConfiguration.alt = "Aperçu de la photo de profil";
+          imageConfiguration.className = "aperçu-photo";
+
+          imagePremiereOuverture.replaceWith(
+            imageConfiguration
+          );
+
+          imageConfiguration.id =
+            "aperçuPhotoPremiereOuverture";
+        }
+      } else {
+        imageProfil.removeAttribute("src");
+
+        imageAccueil.innerHTML = "👤";
+        imageAccueil.classList.add("photo-profil-placeholder");
+
+        if (imagePremiereOuverture) {
+          imagePremiereOuverture.innerHTML = "👤";
+          imagePremiereOuverture.classList.add(
+            "photo-profil-placeholder"
+          );
+        }
       }
     }
 
-    function choisirVoix() {
-      afficherMessage(
-        "Les voix masculine et féminine seront disponibles dans la version complète."
-      );
-    }
-
-    function chargerProfil() {
+    function chargerProfilDansInterface() {
       document.getElementById("prenom").value = prenom;
       document.getElementById("poids").value = poids;
       document.getElementById("taille").value = taille;
       document.getElementById("sexe").value = sexe;
       document.getElementById("niveau").value = niveau;
+
+      document.getElementById(
+        "prenomPremiereOuverture"
+      ).value = prenom;
+
+      document.getElementById(
+        "poidsPremiereOuverture"
+      ).value = poids;
+
+      document.getElementById(
+        "taillePremiereOuverture"
+      ).value = taille;
+
+      document.getElementById(
+        "sexePremiereOuverture"
+      ).value = sexe;
+
+      document.getElementById(
+        "niveauPremiereOuverture"
+      ).value = niveau;
+
+      document.getElementById(
+        "objectifPremiereOuverture"
+      ).value = String(objectif);
+
+      mettreAJourPhotos();
+      mettreAJourBoutonsVoix();
     }
 
-    chargerProfil();
-    mettreAJour();
+    function initialiserEvenements() {
+      document.getElementById(
+        "photoProfil"
+      ).addEventListener("change", function (event) {
+        const fichier = event.target.files[0];
+
+        if (fichier) {
+          gérerPhoto(fichier, "profil");
+        }
+      });
+
+      document.getElementById(
+        "photoPremiereOuverture"
+      ).addEventListener("change", function (event) {
+        const fichier = event.target.files[0];
+
+        if (fichier) {
+          gérerPhoto(fichier, "premiere-ouverture");
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          fermerParametres();
+        }
+      });
+
+      if ("speechSynthesis" in window) {
+        chargerVoixDisponibles();
+
+        window.speechSynthesis.onvoiceschanged =
+          chargerVoixDisponibles;
+      }
+    }
+
+    function initialiserApplication() {
+      initialiserEvenements();
+      chargerProfilDansInterface();
+      mettreAJour();
+
+      const ecranConfiguration = document.getElementById(
+        "ecranConfiguration"
+      );
+
+      if (!configurationTerminee()) {
+        ecranConfiguration.classList.add("visible");
+        document.body.style.overflow = "hidden";
+      } else {
+        ecranConfiguration.classList.remove("visible");
+        document.body.style.overflow = "";
+      }
+    }
+
+    initialiserApplication();
   </script>
 
 </body>
